@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<f:view>
+	<h:head>
+		<title>Cadastro Concurso</title>
+
+		<style type="text/css">
+			.ui-widget {font-size: 10px; !important;}
+		</style>
+	</h:head>
+
+	<h:body>
+		<h:form id="frmGeral">
+			<p:fieldset legend="Cadastro de Concursos" toggleable="true">
+				<p:messages id="messages" />
+
+				<h:panelGrid columns="2" id="pnConcursos"
+					style="font-family: Verdana, Arial; font-weight: bold;">
+					<h:outputLabel id="lbnomeConcurso" value="*Concurso:" for="nomeConcurso"
+						style="float: right;" />
+					<p:inputText id="nomeConcurso" size="60" value="#{gestaoConcursoBean.gestaoConcurso.nomeConcurso}"
+						required="true" requiredMessage="Campo [Concurso] é obrigatório." />
+
+					<h:outputLabel id="lbRemuneracao" value="*Remuneração:" for="remuneracao"
+						style="float: right;" />
+					<p:inputText id="remuneracao" size="10" value="#{gestaoConcursoBean.gestaoConcurso.remuneracao}"
+						required="true" requiredMessage="Campo [Remuneração] é obrigatório."
+						validatorMessage="Campo [Remuneração] possui erros. Verifique.">
+						<f:validateDoubleRange minimum="1" />
+					</p:inputText>
+
+					<h:outputLabel id="lbAno" value="*Inscrição Até:" for="inscricaoAte"
+						style="float: right;" />
+					<p:inputText id="inscricaoAte" size="4" value="#{gestaoConcursoBean.gestaoConcursoBean.inscricaoAte}"
+						required="true" requiredMessage="Campo [Inscrição Até] é obrigatório."
+						validatorMessage="Campo [Inscrição Até] possui erros, inscricaoAte deve estar entre 2000 e 2099. Verifique.">
+						<f:validateLongRange minimum="2000" maximum="2099" />
+					</p:inputText>
+
+					<h:outputLabel id="lbFaixa" value="*Número de Vagas:" for="numeroVagas"
+						style="float: right;" />
+					<p:inputText id="numeroVagas" size="4" value="#{gestaoConcursoBean.gestaoConcursoBean.numeroVagas}" required="true"
+						requiredMessage="Campo [Número de Vagas] é obrigatório."
+						validatorMessage="Campo [Número de Vagas] possui erros. Verifique.">
+						<f:validateLongRange minimum="5" />
+					</p:inputText>
+	
+					<h:outputLabel id="lbEscolaridade" value="*Escolaridade: " for="escolaridade"
+						style="float: right;" />
+					<h:selectOneMenu id="escolaridade" value="#{gestaoConcursoBean.escolaridadeID}"
+						required="true" requiredMessage="Campo [Escolaridade] é obrigatório.">
+						<f:selectItem itemLabel="Escolha ..." itemValue="" />
+						<f:selectItems value="#{escolaridadeBean.escolaridades}" var="esc"
+							itemLabel="#{esc.curso}" itemValue="#{esc.id}" />
+					</h:selectOneMenu>
+				</h:panelGrid>
+
+				<center>
+					<h:panelGrid columns="3"
+						style="font-size: 12px; font-weight: bold;">
+						<p:commandButton value="Gravar" action="#{gestaoConcursoBean.save()}"
+							update="frmGeral, messages, dtGestaoConcursos" />
+
+						<p:commandButton value="Alterar" action="#{gestaoConcursoBean.update()}"
+							update="frmGeral, messages, dtGestaoConcursos" />
+
+						<p:commandButton value="Cadastrar Escolaridade" onclick="cadEscolaridade.show()" />
+					</h:panelGrid>
+				</center>
+
+				<p:spacer height="10" />
+
+				<p:dataTable id="dtGestaoConcursos" emptyMessage="Nenhum registro encontrado."
+					value="#{gestaoConcursoBean.gestaoConcursos}" var="g"
+					style="text-align: center; font-weight: bold;">
+					<f:facet name="header">
+						<h:outputText value="Cadastro de Concursos" />
+					</f:facet>
+
+					<p:column >
+						<f:facet name="header" >
+							<h:outputText value="Concurso" />
+						</f:facet>
+						<h:outputText value="#{g.nomeConcurso}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Remuneração" />
+						</f:facet>
+						<h:outputText value="#{g.remuneracao}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Inscrição Até" />
+						</f:facet>
+						<h:outputText value="#{g.inscricaoAte}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Número de Vagas" />
+						</f:facet>
+						<h:outputText value="#{g.numeroVagas}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Escolaridade" />
+						</f:facet>
+						<h:outputText value="#{g.escolaridade.curso}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Remover" />
+						</f:facet>
+						<f:ajax event="click" render="@form"
+							listener="#{gestaoConcursoBean.remove(g)}">
+							<h:commandLink value="Remover" />
+						</f:ajax>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Alterar" />
+						</f:facet>
+						<h:commandLink value="Alterar">
+							<p:ajax event="click" listener="#{gestaoConcursoBean.preparaAlterar(g)}"
+								update="@form" />
+						</h:commandLink>
+					</p:column>
+
+					<f:facet name="footer">
+						<h:outputText
+							value="Há um total de #{gestaoConcursoBean.count} Concurso(s) cadastrado(s) no sistema." />
+					</f:facet>
+				</p:dataTable>
+			</p:fieldset>
+		</h:form>
+
+		<p:dialog modal="true" widgetVar="cadEscolaridade" showEffect="slide"
+			hideEffect="explode" resizable="false" width="280"
+			header="Cadastrar nova escolaridade">
+			<h:form id="frmEscolaridade">
+				<p:growl id="msgEscolaridade" />
+
+				<h:panelGrid columns="2">
+					<h:outputLabel id="lbCurso" value="Curso:" for="curso"
+						style="float: right;" />
+					<p:inputText id="curso" size="30" value="#{escolaridadeBean.escolaridade.curso}"
+						required="true" requiredMessage="Campo [Curso] é obrigatório." />
+
+					<p:commandButton value="Salvar" action="#{escolaridadeBean.save()}"
+						update="msgEscolaridade, frmEscolaridade, frmGeral"
+						oncomplete="cadEscolaridade.hide()" />
+				</h:panelGrid>
+
+			</h:form>
+		</p:dialog>
+	</h:body>
+</f:view>
+</html>

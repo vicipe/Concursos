@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<f:view>
+	<h:head>
+		<title>Cadastro Concurso</title>
+
+		<style type="text/css">
+			.ui-widget {font-size: 10px; !important;}
+		</style>
+	</h:head>
+
+	<h:body>
+		<h:form id="frmGeral">
+			<p:fieldset legend="Cadastro de Concursos" toggleable="true">
+				<p:messages id="messages" />
+
+				<h:panelGrid columns="2" id="pnDvds"
+					style="font-family: Verdana, Arial; font-weight: bold;">
+					<h:outputLabel id="lbTitulo" value="*Concurso:" for="titulo"
+						style="float: right;" />
+					<p:inputText id="titulo" size="60" value="#{dvdBean.dvd.titulo}"
+						required="true" requiredMessage="Campo [Titulo] é obrigatório." />
+
+					<h:outputLabel id="lbPreco" value="*Remuneração:" for="preco"
+						style="float: right;" />
+					<p:inputText id="preco" size="10" value="#{dvdBean.dvd.preco}"
+						required="true" requiredMessage="Campo [Preço] é obrigatório."
+						validatorMessage="Campo [Preço] possui erros. Verifique.">
+						<f:validateDoubleRange minimum="1" />
+					</p:inputText>
+
+					<h:outputLabel id="lbAno" value="*Inscrição Até:" for="ano"
+						style="float: right;" />
+					<p:inputText id="ano" size="4" value="#{dvdBean.dvd.ano}"
+						required="true" requiredMessage="Campo [Inscrição Até] é obrigatório."
+						validatorMessage="Campo [Inscrição Até] possui erros, ano deve estar entre 2000 e 2099. Verifique.">
+						<f:validateLongRange minimum="2000" maximum="2099" />
+					</p:inputText>
+
+					<h:outputLabel id="lbFaixa" value="*Número de Vagas:" for="faixa"
+						style="float: right;" />
+					<p:inputText id="faixa" size="2"
+						value="#{dvdBean.dvd.faixa_etaria}" required="true"
+						requiredMessage="Campo [Faixa etária] é obrigatório."
+						validatorMessage="Campo [Faixa etária] possui erros. Verifique.">
+						<f:validateLongRange minimum="5" />
+					</p:inputText>
+
+					<h:outputLabel id="lbGenero" value="*Escolaridade: " for="genero"
+						style="float: right;" />
+					<h:selectOneMenu id="genero" value="#{dvdBean.generoID}"
+						required="true" requiredMessage="Campo [Genero] é obrigatório.">
+						<f:selectItem itemLabel="Escolha ..." itemValue="" />
+						<f:selectItems value="#{generoBean.generos}" var="gen"
+							itemLabel="#{gen.nome}" itemValue="#{gen.id}" />
+					</h:selectOneMenu>
+				</h:panelGrid>
+
+				<center>
+					<h:panelGrid columns="3"
+						style="font-size: 12px; font-weight: bold;">
+						<p:commandButton value="Gravar" action="#{dvdBean.save()}"
+							update="frmGeral, messages, dtDVDs" />
+
+						<p:commandButton value="Alterar" action="#{dvdBean.update()}"
+							update="frmGeral, messages, dtDVDs" />
+
+						<p:commandButton value="Cadastrar Escolaridade" onclick="cadGenero.show()" />
+					</h:panelGrid>
+				</center>
+
+				<p:spacer height="10" />
+
+				<p:dataTable id="dtDVDs" emptyMessage="Nenhum registro encontrado."
+					value="#{dvdBean.dvds}" var="d"
+					style="text-align: center; font-weight: bold;">
+					<f:facet name="header">
+						<h:outputText value="Cadastro de Concursos" />
+					</f:facet>
+
+					<p:column >
+						<f:facet name="header" >
+							<h:outputText value="Concurso" />
+						</f:facet>
+						<h:outputText value="#{d.titulo}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Remuneração" />
+						</f:facet>
+						<h:outputText value="#{d.preco}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Inscrição Até" />
+						</f:facet>
+						<h:outputText value="#{d.ano}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Número de Vagas" />
+						</f:facet>
+						<h:outputText value="#{d.faixa_etaria}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Escolaridade" />
+						</f:facet>
+						<h:outputText value="#{d.genero.nome}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Remover" />
+						</f:facet>
+						<f:ajax event="click" render="@form"
+							listener="#{dvdBean.remove(d)}">
+							<h:commandLink value="Remover" />
+						</f:ajax>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Alterar" />
+						</f:facet>
+						<h:commandLink value="Alterar">
+							<p:ajax event="click" listener="#{dvdBean.preparaAlterar(d)}"
+								update="@form" />
+						</h:commandLink>
+					</p:column>
+
+					<f:facet name="footer">
+						<h:outputText
+							value="Há um total de #{dvdBean.count} Concurso(s) cadastrado(s) no sistema." />
+					</f:facet>
+				</p:dataTable>
+			</p:fieldset>
+		</h:form>
+
+		<p:dialog modal="true" widgetVar="cadGenero" showEffect="slide"
+			hideEffect="explode" resizable="false" width="280"
+			header="Cadastrar nova escolaridade">
+			<h:form id="frmGenero">
+				<p:growl id="msgGenero" />
+
+				<h:panelGrid columns="2">
+					<h:outputLabel id="lbNome" value="Curso:" for="nome"
+						style="float: right;" />
+					<p:inputText id="nome" size="30" value="#{generoBean.genero.nome}"
+						required="true" requiredMessage="Campo [Nome] é obrigatório." />
+
+					<p:commandButton value="Salvar" action="#{generoBean.save()}"
+						update="msgGenero, frmGenero, frmGeral"
+						oncomplete="cadGenero.hide()" />
+				</h:panelGrid>
+
+			</h:form>
+		</p:dialog>
+	</h:body>
+</f:view>
+</html>

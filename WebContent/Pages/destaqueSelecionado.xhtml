@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>:: Destaque Selecionado ::</title>
+
+	<style type="text/css">
+body {
+	background-color: #eeeeee;
+	font-size: 12px
+}
+</style>
+</h:head>
+
+<h:body>
+
+	<div align="center">
+
+		<h:form id="cadastroConcurso">
+
+			<p:layout style="width:100%;height:100%" closeTitle="true">
+
+				<p:layoutUnit position="north" size="120">
+					<p:toolbar>
+						<p:toolbarGroup align="center">
+							<h:graphicImage url="/images/logo/logoBrothers.png"
+								style="float:left;" />
+
+							<p:dock position="top" proximity="0" halign="center"
+								itemWidth="60">
+								<p:menuitem value="Editais" icon="/images/dock/editais.png"
+									url="#" style="font-size: 9px; color:#67A3CF" />
+
+								<p:menuitem value=" " icon="/images/dock/transparente.png"
+									url="#" />
+
+								<p:menuitem value="ProvaOn" icon="/images/dock/provas.png"
+									url="#" style="font-size: 9px; color:#67A3CF " />
+
+								<p:menuitem value=" " icon="/images/dock/transparente.png"
+									url="#" />
+
+								<p:menuitem value="ProvasAn" icon="/images/dock/prova.png"
+									url="#" style="font-size: 9px; color:#67A3CF" />
+
+								<p:menuitem value=" " icon="/images/dock/transparente.png"
+									url="#" />
+
+								<p:menuitem value="DicasCon" icon="/images/dock/dicas.png"
+									url="#" style="font-size: 9px; color:#67A3CF" />
+
+								<p:menuitem value=" " icon="/images/dock/transparente.png"
+									url="#" />
+
+								<p:menuitem value="online"
+									icon="/images/dock/simulado_on_line.png" url="#"
+									style="font-size: 9px; color:#67A3CF" />
+								<p:menuitem value=" " icon="/images/dock/transparente.png"
+									url="#" />
+
+								<p:menuitem value="S" icon="/images/dock/simulado_on.png"
+									url="\paginas\destaqueSelecionado.xhtml"
+									style="font-size: 9px; color:#67A3CF" />
+							</p:dock>
+						</p:toolbarGroup>
+
+					</p:toolbar>
+
+				</p:layoutUnit>
+
+				<p:layoutUnit id="centerLayout" position="center">
+
+					<p:growl id="growl" showDetail="true" />
+
+					<p:fieldset legend="Destaque" toggleable="true"
+						toggleSpeed="500">
+						<p:ajax event="toggle" listener="#{fieldsetBean.handleToggle}"
+							update="growl" />
+						<h:panelGrid columns="2" cellpadding="10">
+							<p:graphicImage value="/images/godfather/godfather2.jpg" />
+							<h:outputText
+								value="teste" />
+						</h:panelGrid>
+					</p:fieldset>
+
+				</p:layoutUnit>
+			</p:layout>
+		</h:form>
+	</div>
+</h:body>
+</html>

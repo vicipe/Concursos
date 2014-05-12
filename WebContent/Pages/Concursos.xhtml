@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>:: Concursos ::</title>
+
+	<style type="text/css">
+body {
+	background-color: #eeeeee;
+	font-size: 10px
+}
+</style>
+
+	<script type="text/javascript">
+		var pagina;
+
+		function chama(pagina) {
+			if (pagina == "PoliciaCivil") {
+
+			}
+		}
+	</script>
+
+</h:head>
+<h:body>
+	<div align="center">
+
+		<p:growl id="messages" />
+		<h:form id="principal">
+
+			<p:layout fullPage="true">
+
+				<p:layoutUnit position="top" height="100">
+					<p:toolbar>
+						<p:toolbarGroup align="center">
+							<h:graphicImage url="/images/logo/logoBrothers.png"
+								style="float:left;" />
+
+							<p:dock position="top" proximity="0" halign="center"
+								itemWidth="60">
+								<p:menuitem value="Editais" icon="/images/dock/editais.png"
+									url="#" style="font-size: 9px; color:#67A3CF" />
+
+								<p:menuitem value=" " icon="/images/dock/transparente.png"
+									url="#" />
+
+								<p:menuitem value="ProvaOn" icon="/images/dock/provas.png"
+									url="#" style="font-size: 9px; color:#67A3CF " />
+
+								<p:menuitem value=" " icon="/images/dock/transparente.png"
+									url="#" />
+
+								<p:menuitem value="ProvasAn" icon="/images/dock/prova.png"
+									url="#" style="font-size: 9px; color:#67A3CF" />
+
+								<p:menuitem value=" " icon="/images/dock/transparente.png"
+									url="#" />
+
+								<p:menuitem value="DicasCon" icon="/images/dock/dicas.png"
+									url="#" style="font-size: 9px; color:#67A3CF" />
+
+								<p:menuitem value=" " icon="/images/dock/transparente.png"
+									url="#" />
+
+								<p:menuitem value="online"
+									icon="/images/dock/simulado_on_line.png" url="#"
+									style="font-size: 9px; color:#67A3CF" />
+								<p:menuitem value=" " icon="/images/dock/transparente.png"
+									url="#" />
+
+								<p:menuitem value="S" icon="/images/dock/simulado_on.png"
+									url="/paginas/destaqueSelecionado.jsf"
+									style="font-size: 9px; color:#67A3CF" />
+							</p:dock>
+						</p:toolbarGroup>
+
+					</p:toolbar>
+				</p:layoutUnit>
+
+
+				<p:layoutUnit position="left" width="250" header="Destaques">
+					<ui:insert name="centro">
+						<h:form id="form">
+
+							<p:growl id="growl" showDetail="true" />
+
+							<p:panel>
+							</p:panel>
+							<p:panel id="PoliciaCivil" header="Policia Civil" style="font-size: 12px;">
+								<p:commandLink style="text-decoration:none"
+									action="#{redirectPaginas.redireciona}">
+									<h:outputText
+										value="1000 Vagas, Investigador, nível superior, Edital Publicado." style="font-size: 12px;"/>
+								</p:commandLink>
+							</p:panel>
+
+							<p:panel id="Correios" header="Correios"  style="font-size: 12px;">
+								<p:commandLink style="text-decoration:none"
+									action="#{redirectPaginas.redireciona}">
+									<h:outputText
+										value="10.000 Vagas, remuneração até R$4.840,00 Nível médio e superior, edital em breve."  style="font-size: 12px;"/>
+								</p:commandLink>
+							</p:panel>
+
+							<p:panel id="GuardaMunicipal" header="Guarda Municipal de Belo Horizonte"  style="font-size: 12px;">
+								<p:commandLink style="text-decoration:none"
+									action="#{redirectPaginas.redireciona}">
+									<h:outputText
+										value="200 Vagas, nível médio, remuneração até R$1540,00. Edital em breve."  style="font-size: 12px;"/>
+								</p:commandLink>
+							</p:panel>
+
+							<p:panel id="AgenteAdministrativo" header="Agente Administrativo"  style="font-size: 12px;">
+								<p:commandLink style="text-decoration:none"
+									action="#{redirectPaginas.redireciona}">
+									<h:outputText
+										value="Polícia Rodoviária Federal, 216 vagas, nível médio, Remuneração inicial R$3.689,00, Inscrições abertas."  style="font-size: 12px;"/>
+								</p:commandLink>
+							</p:panel>
+						</h:form>
+					</ui:insert>
+				</p:layoutUnit>
+
+
+				<p:layoutUnit position="center" header="Concursos Abertos">
+					<p:accordionPanel autoHeight="false">
+						<p:tab>
+							<center>
+								<h:form>
+									<p:imageSwitch effect="turnDown" slideshowAuto="true"
+										slideshowSpeed="6000">
+										<ui:repeat value="#{imageSwitchBean.images}" var="image">
+											<p:graphicImage value="#{image}" />
+										</ui:repeat>
+									</p:imageSwitch>
+
+									<p:hotkey bind="left" oncomplete="imagens.previous();"
+										icon="ui-icon-circle-triangle-w" />
+									<p:hotkey bind="right" oncomplete="imagens.next();"
+										icon="ui-icon-circle-triangle-e" />
+								</h:form>
+							</center>
+						</p:tab>
+
+					</p:accordionPanel>
+				</p:layoutUnit>
+			</p:layout>
+
+		</h:form>
+	</div>
+</h:body>
+</html>
